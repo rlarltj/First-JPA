@@ -1,5 +1,6 @@
 package jpapractice.jpahomeshop.domain.item;
 
+import jpapractice.jpahomeshop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +9,9 @@ import javax.persistence.Entity;
 
 @Entity
 @Getter
-@Setter
-@DiscriminatorValue("M")
-public class Movie extends Item{
+@Setter @DiscriminatorValue("M")
+public class Movie extends Item {
     private String director;
     private String actor;
+
 }

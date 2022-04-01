@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="orders") @Getter
-@Setter
-public class Order {
-    @Id @GeneratedValue
-    @Column(name="order_id")
-    private Long Id;
+@Getter @Setter
+@Table(name="ORDERS")
+class Order{
+    @Id
+    @GeneratedValue
+    @Column(name = "order_id")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
@@ -23,14 +24,14 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="delivery_id")
-    private Delivery delivery;
-
-    private LocalDateTime orderDate;  // 주문 시간
+    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="delivery_id")
+    private Delivery delivery;
 
     //==연관관계 편의 메서드==//
     public void setMember(Member member){
@@ -38,13 +39,13 @@ public class Order {
         member.getOrders().add(this);
     }
 
-    public void addOrderItem(OrderItem orderItem){
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
-    }
-
-    public void setDelivery(Delivery delivery){
+    public void setDelievery(Delivery delivery){
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 }
