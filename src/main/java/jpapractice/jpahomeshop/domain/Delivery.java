@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-class Delivery{
+public class Delivery{
     @Id
     @GeneratedValue
     @Column(name = "delivery_id")

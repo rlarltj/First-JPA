@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-class OrderItem{
+public class OrderItem{
     @Id
     @GeneratedValue
     @Column(name = "order_item_id")
@@ -27,4 +27,26 @@ class OrderItem{
 
     private int count;
 
+    //== 생성 메서드 ==//
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);  // 주문 수량만큼 재고 마이너스
+        return orderItem;
+    }
+
+
+    //== 비즈니스 로직==//
+    public void cancel() {
+        getItem().addStock(count);
+        //주문 수량만큼 재고를 원상복구 한다.
+    }
+
+    //== 조회 로직 ==//
+    public int getTotalPrice() {
+        return orderPrice * count;
+    }
 }
