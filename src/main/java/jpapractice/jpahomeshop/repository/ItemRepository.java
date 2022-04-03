@@ -15,10 +15,9 @@ public class ItemRepository {
 
     public void save(Item item){
         if(item.getId() == null){
-            //Item은 처음 저장할 때 id를 가지고 있지 않다.
             em.persist(item);
         }else{
-            em.merge(item); //강제 업데이트
+            em.merge(item);
         }
     }
 
